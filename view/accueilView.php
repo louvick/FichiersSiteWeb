@@ -1,7 +1,7 @@
 <?php // Ce fichier sert à gérer l'affichage de la page d'accueil ?>
 
 <?php // La variable $title servira pour la balise <title> dans le fichier template.php ?>
-<?php $title = 'Accueil'; ?>
+<?php $title = 'Accueil';?>
 
 <?php //Démarre la tamporisation du contenu ?>
 <?php ob_start(); ?>

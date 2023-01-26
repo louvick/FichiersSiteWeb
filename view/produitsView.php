@@ -1,8 +1,15 @@
+
+
 <?php $titreH1= 'Les produits'?>
 
 <?php if(isset($categorie)) {
     $titreH1.= ' de catégorie '.$categorie;
-}?>
+    $title = $categorie;
+}
+else {
+    $title = 'Produits';
+}
+?>
 
 <?php ob_start(); ?>
 <h1><?=$titreH1?></h1>

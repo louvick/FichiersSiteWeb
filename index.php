@@ -2,7 +2,6 @@
 //Débogage afficher ce qui est reçu en paramètres
 echo "----------------------------<br/>";
 echo "Paramètres reçus:<br/><pre>";
-print_r($_REQUEST);
 echo "</pre>----------------------------<br/>";
 
 //Est-ce qu'un paramètre action est présent

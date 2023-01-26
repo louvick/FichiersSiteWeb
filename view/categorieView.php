@@ -7,7 +7,7 @@
     <div>
         <h3>Categories: <?= htmlspecialchars($categorie->get_Categorie()) ?> </h3>        
         <p>Description: <?= htmlspecialchars($categorie->get_description()) ?> </p>
-        <a href=<?="produitscategorie/".$categorie->get_id_categorie().""?>>Voir <?=$categorie->get_Categorie()?></a>        
+        <a href=<?="produitscategorie/".$categorie->get_id_categorie()?>>Voir <?=$categorie->get_Categorie()?></a>        
         <hr>
     </div>
 <?php } ?>
