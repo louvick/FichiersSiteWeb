@@ -3,10 +3,10 @@
 echo "----------------------------<br/>";
 echo "Paramètres reçus:<br/><pre>";
 echo "</pre>----------------------------<br/>";
-
+session_start();
 //Est-ce qu'un paramètre action est présent
 if (isset($_GET['action'])) {
-
+    
     //Est-ce que l'action demandée est la liste des produits
     if ($_GET['action'] == 'produits') {
         //Ajoute le controleur de Produit
@@ -38,6 +38,17 @@ if (isset($_GET['action'])) {
             require('controller/controllerProduit.php');
 
             listProduitsCategorie($_GET['id']);
+        }
+    }
+    elseif ($_GET['action'] == 'connexion') {
+        require('controller/controllerUtilisateur.php');
+        getFormConnexion();
+    }
+    elseif ($_REQUEST['action'] == 'authentifier') {
+        
+        if(isset($_REQUEST['courriel']) && isset($_REQUEST['utilisateur'])) {
+            require('controller/controllerUtilisateur.php');
+            authentifier($_REQUEST['courriel'],$_REQUEST['utilisateur']);
         }
     }
 }
