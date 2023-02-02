@@ -41,6 +41,9 @@ class UtilisateurManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO `tbl_utilisateur` (`nom`,`prenom`,`courriel`,`mdp`,`est_actif`,`role_utilisateur`,`type_utilisateur`) VALUES (:nom, :prenom, :courriel, :mdp, :est_actif, :role_utilisateur, :type_utilisateur)');
         $req->execute(array(':nom'=>$infosUtilisateur['family_name'],':prenom'=>$infosUtilisateur['given_name'],':courriel'=>$infosUtilisateur['email'],':mdp'=>password_hash($infosUtilisateur['sub'], PASSWORD_DEFAULT),':est_actif'=>'1',':role_utilisateur'=>'0',':type_utilisateur'=>'1'));
+
+        //$req = $db->prepare('INSERT INTO `tbl_utilisateur` (`nom`,`prenom`,`courriel`,`mdp`,`est_actif`,`role_utilisateur`,`type_utilisateur`)');
+        //$req->execute(array($infosUtilisateur['family_name'],$infosUtilisateur['given_name'],$infosUtilisateur['email'],password_hash($infosUtilisateur['sub'], PASSWORD_DEFAULT),'1','0','1'));
         $utilisateur = new Utilisateur($req->fetch());
 
     }
