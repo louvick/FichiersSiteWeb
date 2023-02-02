@@ -1,9 +1,7 @@
 <?php
-//Débogage afficher ce qui est reçu en paramètres
-echo "----------------------------<br/>";
-echo "Paramètres reçus:<br/><pre>";
-echo "</pre>----------------------------<br/>";
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 //Est-ce qu'un paramètre action est présent
 if (isset($_REQUEST['action'])) {
     
@@ -46,11 +44,19 @@ if (isset($_REQUEST['action'])) {
     }
     elseif ($_REQUEST['action'] == 'authentifier') {
         
-        if(isset($_REQUEST['courriel']) && isset($_REQUEST['utilisateur'])) {
+        if(isset($_REQUEST['courriel']) && isset($_REQUEST['mdp'])) {
             require('controller/controllerUtilisateur.php');
-            authentifier($_REQUEST['courriel'],$_REQUEST['utilisateur']);
+            authentifier($_REQUEST['courriel'],$_REQUEST['mdp']);
         }
     }
+    else if($_REQUEST['action'] == 'deconnexion') {
+        require('controller/controllerUtilisateur.php');
+        deconnexion();
+    }
+}
+elseif (isset($_REQUEST['credential'])) {
+    require('controller/controllerUtilisateur.php');
+    authentificationGoogle($_REQUEST['credential']);
 }
 // Si pas de paramètre charge l'accueil
 else {

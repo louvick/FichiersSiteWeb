@@ -12,13 +12,14 @@ class Utilisateur {
     private $_token;
 
     public function __construct($params = array()){
-  
-        foreach($params as $k => $v){
+        if($params) {
+            foreach($params as $k => $v){
 
-            $methodName = "set_" . $k;
-            if(method_exists($this, $methodName)) {
-                $this->$methodName($v);
-            }   
+                $methodName = "set_" . $k;
+                if(method_exists($this, $methodName)) {
+                    $this->$methodName($v);
+                }   
+            }
         }
     }
 
