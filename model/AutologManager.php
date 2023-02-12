@@ -9,7 +9,7 @@ class AutologManager extends Manager
         $utila = new Util();
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO `tbl_autologin` (`id_utilisateur`,`token_hash`,`est_valide`,`date_expiration`) VALUES (:id_utilisateur, :token_hash, :est_valide, :date_expiration)');
-        $token = $utila->getToken(16);
+        $token = $utila->getToken(24);
         $req->execute(array(':id_utilisateur'=>$util->get_id_utilisateur(), ':token_hash'=> password_hash($token,PASSWORD_DEFAULT), ':est_valide'=>1, ':date_expiration'=>date('Y-m-d', strtotime("+1 month", strtotime(date("Y/m/d"))))));
         return $token;
     }

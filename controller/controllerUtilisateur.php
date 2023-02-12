@@ -1,5 +1,6 @@
 <?php
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 require('model/UtilisateurManager.php');
 
 function getFormConnexion()
@@ -26,7 +27,7 @@ function authentifier($request)
             $cookieValues = array('user_id' => $utilisateur->get_id_utilisateur(), 'token' => $randomToken);
             setcookie('session', json_encode($cookieValues), time()+60);
         }
-        
+        header("Refresh:0");
         listProduits(); 
     }
     else {
@@ -38,8 +39,7 @@ function authentifier($request)
 function deconnexion() {
     $_SESSION= array();
     session_destroy();
-    require('controller/controllerAccueil.php');
-    listProduits(); 
+    header("Refresh:0; url=index.php"); 
 }
 
 function deleteAutoLogin() {
@@ -50,17 +50,49 @@ function deleteAutoLogin() {
         setcookie('session', "", time()+1);
     }
     
-    require('controller/controllerAccueil.php');
-    listProduits(); 
+    header("Refresh:0; url=index.php");
 }
 
 function inscription($result) {
     $um = new UtilisateurManager();
     if(isset($result)) {
-        $um->inscription($result);
+        $resultat = $um->inscription($result);
+        
+        if($resultat!=null) {
+            require('controller/controllerAccueil.php');
+            
+            require 'vendor/autoload.php';
+            
+            $mail = new PHPMailer;
+            $mail->isSMTP();
+            $mail->Host = 'localhost';
+            $mail->Port = 1025;
+            $mail->SMTPAuth = true;
+            $mail->setFrom("test@gmail.com", "lou");
+            $mail->addReplyTo('moi@monCourriel.com', 'Votre nom');
+            $mail->addAddress($result['courriel'], $result['prenom']);
+            $mail->Subject = "Validation compte";
+            $id = $resultat[1]->get_id_utilisateur();
+            $token = $resultat[0];
+            $mail->msgHTML('<a href="http://localhost/FichiersSiteWeb/index.php?action=validation&id=' . $id . '&token=' . $token . '">Cliquer ici pour activer votre compte</a>');
+            echo '<a href="http://localhost/FichiersSiteWeb/index.php?action=validation&id=' . $id . '&token=' . $token . '">Cliquer ici pour activer votre compte</a>';
+
+
+            if (!$mail->send())
+                echo 'Erreur de Mailer : ' . $mail->ErrorInfo;
+            else
+                echo 'Le message a été envoyé.';
+            listProduits();
+        }
+        else {
+            echo 'L\'utilisateur existe déjà';
+            require('view/inscriptionView.php');
+        }
     }
-    require('controller/controllerAccueil.php');
-    listProduits(); 
+    else {
+        echo 'L\'utilisateur existe déjà';
+        require('view/inscriptionView.php');
+    }
 }
 
 function authentificationGoogle($credential) {
@@ -86,4 +118,19 @@ function authentificationGoogle($credential) {
     require('controller/controllerAccueil.php');
     //Appel la fonction listProduits contenu dans le controleur de Produit
     listProduits();
+}
+
+function checkTokenInscription($request) {
+    $um = new UtilisateurManager();
+    $utilisateur = $um->verifyToken($request['id'],$request['token']);
+    
+    if(isset($utilisateur)) {
+        $um->actif($utilisateur);
+        require('controller/controllerAccueil.php');
+    
+        listProduits();
+    }
+    else {
+        echo 'Le token est invalide';
+    }
 }

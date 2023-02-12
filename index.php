@@ -65,6 +65,10 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         inscription($_REQUEST);
     }
+    else if($_REQUEST['action']=='validation') {
+        require('controller/controllerUtilisateur.php');
+        checkTokenInscription($_REQUEST);
+    }
 }
 elseif (isset($_REQUEST['credential'])) {
     require('controller/controllerUtilisateur.php');
