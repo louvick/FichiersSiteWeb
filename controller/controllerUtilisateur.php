@@ -14,28 +14,24 @@ function authentifier($request)
     require('model/AutologManager.php');
 
     $um = new UtilisateurManager();
+    $am = new AutologManager();
 
-    $personne = new Utilisateur($um->verifAuthentification($request['courriel'], $request['mdp']));
-    print_r($personne->get_nom());
-
-    /*if($utilisateur!=null) {
+    $utilisateur = $um->verifAuthentification($request['courriel'], $request['mdp']);
+    if($utilisateur!=null) {
         $_SESSION['courriel'] = $request['courriel'];
         $_SESSION['role'] = $utilisateur->get_role_utilisateur();
         
+        if(isset($request['souvenir'])&&$request['souvenir']=='on') {
+            $randomToken = $am->addAutolog($utilisateur);
+            $cookieValues = array('user_id' => $utilisateur->get_id_utilisateur(), 'token' => $randomToken);
+            setcookie('session', json_encode($cookieValues), time()+60);
+        }
         
-        
-        #$randomToken = $am->addAutolog($utilisateur);
-        
-
-        #$cookieValues = array('user_id' => $utilisateur->get_id_utilisateur(), 'token' => $randomToken);
-
-        #setcookie('session', json_encode($cookieValues), 86400);
-
-        //listProduits(); 
+        listProduits(); 
     }
     else {
         echo 'Echec de l\'authentification';
-    }*/
+    }
     
 }
 
@@ -43,8 +39,28 @@ function deconnexion() {
     $_SESSION= array();
     session_destroy();
     require('controller/controllerAccueil.php');
-    listProduits();
+    listProduits(); 
+}
+
+function deleteAutoLogin() {
+    require('model/AutologManager.php');
+    $am = new AutologManager();
+    if(isset($_COOKIE['session'])) {
+        $am->removeValide($am->verifyToken(json_decode($_COOKIE['session'])->user_id,json_decode($_COOKIE['session'])->token));
+        setcookie('session', "", time()+1);
+    }
     
+    require('controller/controllerAccueil.php');
+    listProduits(); 
+}
+
+function inscription($result) {
+    $um = new UtilisateurManager();
+    if(isset($result)) {
+        $um->inscription($result);
+    }
+    require('controller/controllerAccueil.php');
+    listProduits(); 
 }
 
 function authentificationGoogle($credential) {

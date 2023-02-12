@@ -53,6 +53,18 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         deconnexion();
     }
+    else if($_REQUEST['action']== 'delete') {
+        require('controller/controllerUtilisateur.php');
+        deleteAutoLogin();
+        
+    }
+    else if($_REQUEST['action']=='inscrire') {
+        require('view/inscriptionView.php');
+    }
+    else if($_REQUEST['action']== 'inscription') {
+        require('controller/controllerUtilisateur.php');
+        inscription($_REQUEST);
+    }
 }
 elseif (isset($_REQUEST['credential'])) {
     require('controller/controllerUtilisateur.php');
