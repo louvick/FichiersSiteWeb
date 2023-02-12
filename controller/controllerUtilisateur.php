@@ -7,19 +7,35 @@ function getFormConnexion()
     require('view/loginView.php');
 }
 
-function authentifier($courriel, $motPasse)
+function authentifier($request)
 {
     require('controller/controllerAccueil.php');
+    require('model/Util.php');
+    require('model/AutologManager.php');
+
     $um = new UtilisateurManager();
-    $utilisateur = new Utilisateur($um->verifAuthentification($courriel, $motPasse));
-    if($utilisateur!=null) {
-        $_SESSION['courriel'] = $courriel;
+
+    $personne = new Utilisateur($um->verifAuthentification($request['courriel'], $request['mdp']));
+    print_r($personne->get_nom());
+
+    /*if($utilisateur!=null) {
+        $_SESSION['courriel'] = $request['courriel'];
         $_SESSION['role'] = $utilisateur->get_role_utilisateur();
-        listProduits(); 
+        
+        
+        
+        #$randomToken = $am->addAutolog($utilisateur);
+        
+
+        #$cookieValues = array('user_id' => $utilisateur->get_id_utilisateur(), 'token' => $randomToken);
+
+        #setcookie('session', json_encode($cookieValues), 86400);
+
+        //listProduits(); 
     }
     else {
         echo 'Echec de l\'authentification';
-    }
+    }*/
     
 }
 

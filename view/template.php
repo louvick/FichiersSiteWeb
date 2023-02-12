@@ -28,7 +28,7 @@
                 <li><a href="<?= $baseURL;?>categories">Les catégories</a></li>
                 <?php 
                 
-                if(isset($_SESSION['courriel']) && $_SESSION['courriel']!=null||isset($_COOKIE['g_csrf_token'])) { 
+                if(isset($_SESSION['courriel']) && $_SESSION['courriel']!=null||isset($_COOKIE['g_csrf_token'])||isset($_COOKIE['session'])) { 
                     echo "<li><a href=".$baseURL."deconnexion>Se déconnecter</a></li>";
                 
                 }

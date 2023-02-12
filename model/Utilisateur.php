@@ -12,23 +12,48 @@ class Utilisateur {
     private $_token;
 
     public function __construct($params = array()){
-        if($params) {
-            foreach($params as $k => $v){
+  
+        foreach($params as $k => $v){
 
-                $methodName = "set_" . $k;
-                if(method_exists($this, $methodName)) {
-                    $this->$methodName($v);
-                }   
-            }
+            $methodName = "set_" . $k;            
+            if(method_exists($this, $methodName)) {
+                $this->$methodName($v);
+            }   
         }
     }
 
+    public function __serialize(){
+        return [
+            "id_Utilisateur" => $this->_id_utilisateur,
+            "nom" => $this->_nom,
+            "prenom" => $this->_prenom,
+            "courriel" => $this->_courriel,
+            "mdp" => $this->_mdp,
+            "est_actif" => $this->_est_actif,
+            "role_utilisateur" => $this->_role_utilisateur,
+            "type_utilisateur" => $this->_type_utilisateur,
+            "token" => $this->_token
+        ];
+    }
+
+    public function __unserialize($data){
+        $this->_id_utilisateur = $data["id_Utilisateur"];
+        $this->_nom = $data["nom"];
+        $this->_prenom= $data["prenom"];
+        $this->_courriel = $data["courriel"];
+        $this->_mdp = $data["mdp"];
+        $this->_est_actif = $data["est_actif"];
+        $this->_role_utilisateur = $data["role_utilisateur"];
+        $this->_type_utilisateur = $data["type_utilisateur"];
+        $this->_token = $data["token"];
+    }
 
     /**
      * Get the value of _id_utilisateur
      */ 
     public function get_id_utilisateur()
     {
+        
         return $this->_id_utilisateur;
     }
 
@@ -59,8 +84,9 @@ class Utilisateur {
      */ 
     public function set_nom($_nom)
     {
+        
         $this->_nom = $_nom;
-
+        
         return $this;
     }
 

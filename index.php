@@ -46,7 +46,7 @@ if (isset($_REQUEST['action'])) {
         
         if(isset($_REQUEST['courriel']) && isset($_REQUEST['mdp'])) {
             require('controller/controllerUtilisateur.php');
-            authentifier($_REQUEST['courriel'],$_REQUEST['mdp']);
+            authentifier($_REQUEST);
         }
     }
     else if($_REQUEST['action'] == 'deconnexion') {
