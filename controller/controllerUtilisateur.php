@@ -7,14 +7,28 @@ function getFormConnexion()
     require('view/loginView.php');
 }
 
-function authentifier($courriel, $motPasse)
+function authentifier($request)
 {
     require('controller/controllerAccueil.php');
+    require('model/Util.php');
+    require('model/AutologManager.php');
+
     $um = new UtilisateurManager();
-    $utilisateur = $um->verifAuthentification($courriel, $motPasse);
+ 
+    $am = new AutologManager();
+
+    $utilisateur = $um->verifAuthentification($request['courriel'], $request['mdp']);
+    
     if($utilisateur!=null) {
-        $_SESSION['courriel'] = $courriel;
+        $_SESSION['courriel'] = $request['courriel'];
         $_SESSION['role'] = $utilisateur->get_role_utilisateur();
+        
+        if(isset($request['souvenir'])&&$request['souvenir']=='on') {
+            $randomToken = $am->addAutolog($utilisateur);
+            $cookieValues = array('user_id' => $utilisateur->get_id_utilisateur(), 'token' => $randomToken);
+            setcookie('session', json_encode($cookieValues), time()+60);
+        }
+        
         listProduits(); 
     }
     else {
@@ -27,8 +41,28 @@ function deconnexion() {
     $_SESSION= array();
     session_destroy();
     require('controller/controllerAccueil.php');
-    listProduits();
+    listProduits(); 
+}
+
+function deleteAutoLogin() {
+    require('model/AutologManager.php');
+    $am = new AutologManager();
+    if(isset($_COOKIE['session'])) {
+        $am->removeValide($am->verifyToken(json_decode($_COOKIE['session'])->user_id,json_decode($_COOKIE['session'])->token));
+        setcookie('session', "", time()+1);
+    }
     
+    require('controller/controllerAccueil.php');
+    listProduits(); 
+}
+
+function inscription($result) {
+    $um = new UtilisateurManager();
+    if(isset($result)) {
+        $um->inscription($result);
+    }
+    require('controller/controllerAccueil.php');
+    listProduits(); 
 }
 
 function authentificationGoogle($credential) {
@@ -40,7 +74,12 @@ function authentificationGoogle($credential) {
     $payload = $client->verifyIdToken($credential);
     if ($payload) {
         $um = new UtilisateurManager();
-        $um->addUtilisateur($payload);        
+        if(!$um->getUtilisateurParCourriel($payload['email'])) {
+            $um->addUtilisateur($payload);
+        }
+        else {
+            $_SESSION['courriel']=$payload['email'];
+        }
     //$domain = $payload['hd'];
     } else {
     // Invalid ID token

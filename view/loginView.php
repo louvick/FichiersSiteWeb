@@ -1,4 +1,4 @@
-<?php $title = 'Accueil';?>
+<?php $title = 'Login';?>
 
 <?php //Démarre la tamporisation du contenu ?>
 <?php ob_start(); ?>

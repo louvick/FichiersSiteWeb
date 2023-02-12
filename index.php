@@ -46,12 +46,24 @@ if (isset($_REQUEST['action'])) {
         
         if(isset($_REQUEST['courriel']) && isset($_REQUEST['mdp'])) {
             require('controller/controllerUtilisateur.php');
-            authentifier($_REQUEST['courriel'],$_REQUEST['mdp']);
+            authentifier($_REQUEST);
         }
     }
     else if($_REQUEST['action'] == 'deconnexion') {
         require('controller/controllerUtilisateur.php');
         deconnexion();
+    }
+    else if($_REQUEST['action']== 'delete') {
+        require('controller/controllerUtilisateur.php');
+        deleteAutoLogin();
+        
+    }
+    else if($_REQUEST['action']=='inscrire') {
+        require('view/inscriptionView.php');
+    }
+    else if($_REQUEST['action']== 'inscription') {
+        require('controller/controllerUtilisateur.php');
+        inscription($_REQUEST);
     }
 }
 elseif (isset($_REQUEST['credential'])) {

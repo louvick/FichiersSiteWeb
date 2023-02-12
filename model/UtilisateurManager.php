@@ -28,7 +28,6 @@ class UtilisateurManager extends Manager
         $req = $db->prepare('SELECT * FROM tbl_utilisateur WHERE courriel = ?');
         $req->execute(array($courriel));
         $utilisateur = new Utilisateur($req->fetch());
-
         if(isset($utilisateur)) {
             return $utilisateur;
         }
@@ -41,7 +40,13 @@ class UtilisateurManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO `tbl_utilisateur` (`nom`,`prenom`,`courriel`,`mdp`,`est_actif`,`role_utilisateur`,`type_utilisateur`) VALUES (:nom, :prenom, :courriel, :mdp, :est_actif, :role_utilisateur, :type_utilisateur)');
         $req->execute(array(':nom'=>$infosUtilisateur['family_name'],':prenom'=>$infosUtilisateur['given_name'],':courriel'=>$infosUtilisateur['email'],':mdp'=>password_hash($infosUtilisateur['sub'], PASSWORD_DEFAULT),':est_actif'=>'1',':role_utilisateur'=>'0',':type_utilisateur'=>'1'));
-        $utilisateur = new Utilisateur($req->fetch());
 
+        $utilisateur = new Utilisateur($req->fetch());
+    }
+
+    public function inscription($request) {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO `tbl_utilisateur` (`nom`,`prenom`,`courriel`,`mdp`,`est_actif`,`role_utilisateur`,`type_utilisateur`) VALUES (:nom, :prenom, :courriel, :mdp, :est_actif, :role_utilisateur, :type_utilisateur)');
+        $req->execute(array(':nom'=>$request['nom'],':prenom'=>$request['prenom'],':courriel'=>$request['courriel'],':mdp'=>password_hash($request['mdp'], PASSWORD_DEFAULT),':est_actif'=>'1',':role_utilisateur'=>'0',':type_utilisateur'=>'0'));
     }
 }

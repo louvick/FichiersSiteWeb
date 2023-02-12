@@ -1,4 +1,5 @@
-<?php $baseURL = "/FichiersSiteWeb/"?>
+<?php $baseURL = "/FichiersSiteWeb/";
+require_once('model/AutologManager.php')?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,14 +12,26 @@
 
     <body>
         <?php
-            //Débogage afficher ce qui est reçu en paramètres
-            echo "----------------------------<br/>";
-            echo "Paramètres reçus:<br/><pre>";
+            echo '----------------------------<br />
+                  Paramètres reçus :<br />
+                  $_REQUEST :<br />
+                  <pre>';
+        
             print_r($_REQUEST);
-            echo "</pre>----------------------------<br/>";
+        
+            echo '</pre>
+                  $_COOKIE :<br />
+                  <pre>';
+        
+            print_r($_COOKIE);
+        
+            echo '</pre>----------------------------<br />';
+        
             if(isset($_SESSION['courriel'])) {
                 echo "Bienvenue ".$_SESSION['courriel'];
             }
+
+            
         ?>
         <nav>
             
@@ -27,14 +40,23 @@
                 <li><a href="<?= $baseURL;?>produits">Les produits</a></li>
                 <li><a href="<?= $baseURL;?>categories">Les catégories</a></li>
                 <?php 
+                $am = new AutologManager();
                 
-                if(isset($_SESSION['courriel']) && $_SESSION['courriel']!=null) { 
+                
+                if(isset($_SESSION['courriel']) && $_SESSION['courriel']!=null||isset($_COOKIE['g_csrf_token'])) { 
                     echo "<li><a href=".$baseURL."deconnexion>Se déconnecter</a></li>";
                 
                 }
                 else {
                     echo "<li><a href=".$baseURL."connexion>Se connecter</a></li>";
-                }?>
+                    echo "<li><a href=".$baseURL."inscrire>S'inscrire</a></li>";
+                }
+                
+                if(isset($_COOKIE['session']) && $am->verifyToken(json_decode($_COOKIE['session'])->user_id,json_decode($_COOKIE['session'])->token)!=null) {
+                    echo "<li><a href=".$baseURL."delete>Se déconnecter</a></li>";
+                }
+                
+                ?>
                 
             </ul>
         </nav>
