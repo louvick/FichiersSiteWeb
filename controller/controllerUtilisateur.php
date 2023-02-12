@@ -11,7 +11,7 @@ function authentifier($courriel, $motPasse)
 {
     require('controller/controllerAccueil.php');
     $um = new UtilisateurManager();
-    $utilisateur = new Utilisateur($um->verifAuthentification($courriel, $motPasse));
+    $utilisateur = $um->verifAuthentification($courriel, $motPasse);
     if($utilisateur!=null) {
         $_SESSION['courriel'] = $courriel;
         $_SESSION['role'] = $utilisateur->get_role_utilisateur();
