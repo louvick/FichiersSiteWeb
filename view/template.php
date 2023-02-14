@@ -24,6 +24,12 @@ require_once('model/AutologManager.php')?>
                   <pre>';
         
             print_r($_COOKIE);
+
+            echo '</pre>
+                  $_SESSION :<br />
+                  <pre>';
+        
+            print_r($_SESSION);
         
             echo '</pre>----------------------------<br />';
         
