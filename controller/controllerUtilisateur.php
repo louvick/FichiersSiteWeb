@@ -40,8 +40,10 @@ function authentificationGoogle($credential) {
     $payload = $client->verifyIdToken($credential);
     if ($payload) {
         $um = new UtilisateurManager();
-        $um->addUtilisateur($payload);        
-    //$domain = $payload['hd'];
+        if(!$um->getUtilisateurParCourriel($payload['email'])) {
+            $um->addUtilisateur($payload);
+        }
+        $_SESSION['email'] = $payload['email'];
     } else {
     // Invalid ID token
     }
