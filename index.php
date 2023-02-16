@@ -2,6 +2,11 @@
 if(!isset($_SESSION)){
     session_start();
 }
+/*if(!isset($_SESSION['courriel'])) {
+    require('controller/controllerUtilisateur.php');
+    print_r("asdadsa");
+    getFormConnexion();
+}*/
 //Est-ce qu'un paramètre action est présent
 if (isset($_REQUEST['action'])) {
     
