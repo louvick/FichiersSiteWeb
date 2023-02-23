@@ -1,5 +1,6 @@
 <?php $baseURL = "/FichiersSiteWeb/";
 require_once('model/AutologManager.php')?>
+<script src="inc/js/ajax.js" defer></script>
 <!DOCTYPE html>
 <html>
     <head>

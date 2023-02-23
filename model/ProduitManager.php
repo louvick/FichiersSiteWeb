@@ -46,5 +46,18 @@ class ProduitManager extends Manager
         return $produits;
     }
 
+    public function addProduit($produit,$categorie,$description) {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO `tbl_produit` (`id_categorie`,`produit`,`description`) VALUES (:id_categorie,:produit,:descriptio)');
+        $req->execute(array(':id_categorie'=>$categorie,':produit'=>$produit,':descriptio'=>$description));
+        return $db->lastInsertId();
+    }
+
+    public function removeProduit($id){
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM tbl_produit WHERE `tbl_produit`.`id_produit` = ?');
+        $req->execute(array($id));
+    }
+
 }
 
