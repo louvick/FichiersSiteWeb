@@ -27,3 +27,17 @@ function produit($idProduit)
 
     require('view/produitView.php');
 }
+
+function insertProduit($produit,$categorie,$description)
+{
+    $produitManager = new ProduitManager();
+    return $produitManager->addProduit($produit,$categorie,$description);
+}
+
+function removeProduit($idProduit)
+{
+    $produitManager = new ProduitManager();
+    $produitManager->removeProduit($idProduit);    
+
+    require('view/produitView.php');
+}
