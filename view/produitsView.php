@@ -2,7 +2,6 @@
 
 <?php $titreH1= 'Les produits'?>
 
-
 <?php if(isset($categorie)) {
     $titreH1.= ' de catégorie '.$categorie;
     $title = $categorie;
@@ -10,38 +9,14 @@
 else {
     $title = 'Produits';
 }
-require('controller/controllerCategorie.php');
-$categories = getCategories();
 ?>
 
 <?php ob_start(); ?>
-<h1><?=$titreH1?></h1><input type="image" src="./inc/img/add-icon.png" alt="Ajouter un produit" />
-<form action="index.php" method="post" class="hidden Se connecter" id="addProduitForm">
-    <fieldset>
-        <legend>Gestion d'un produit</legend>
-        <label for="produit">Produit : </label>
-        <input type="text" name="produit">
-        <br>
-        <label for="categorie">Catégorie : </label>
-        <select name="categorie" id="categorie">
-            <?php foreach($categories as $c) {
-                echo '<option value="'.$c->get_id_categorie().'">'.$c->get_categorie().'</option>';
-            }?>
-        </select>
-        <br>
-        <label for="description">Description</label>
-        <input type="text" name="description">
-        <br>
-        <input type="hidden" name="action" value="createProduit" required>
-        <button type="submit">Envoyer</button>
-    </fieldset>
-</form>
+<h1><?=$titreH1?></h1>
 <?php foreach($produits as $produit) {?>
     <div>
         <h3>Produit: <?= htmlspecialchars($produit->get_produit()) ?> </h3>        
-        <p>Description: <?= htmlspecialchars($produit->get_description()) ?> </p>
-        <input type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit"
-       value="<?= htmlspecialchars($produit->get_id_produit()) ?>" />
+        <p>Description: <?= htmlspecialchars($produit->get_description()) ?> </p>        
         <hr>
     </div>
 <?php } ?>

@@ -61,6 +61,7 @@ if (isset($_REQUEST['action'])) {
     else if($_REQUEST['action']== 'delete') {
         require('controller/controllerUtilisateur.php');
         deleteAutoLogin();
+        
     }
     else if($_REQUEST['action']=='inscrire') {
         require('view/inscriptionView.php');
@@ -73,18 +74,7 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         checkTokenInscription($_REQUEST);
     }
-    else if($_REQUEST['action']=='createProduit') {
-        require('controller/controllerProduit.php');
-        print_r(insertProduit($_REQUEST['produit'],$_REQUEST['categorie'],$_REQUEST['description']));
-    }
-    else if($_REQUEST['action']=='supression') {
-        require('controller/controllerProduit.php');
-        removeProduit($_REQUEST['id_produit']);
-    }
-    else if($_REQUEST['action']=='testajax') {
-        require('controller/controllerProduit.php');
-        //insertProduit($_REQUEST['produit'],$_REQUEST['categorie'],$_REQUEST['description']);
-    }
+}
 elseif (isset($_REQUEST['credential'])) {
     require('controller/controllerUtilisateur.php');
     authentificationGoogle($_REQUEST['credential']);
@@ -94,6 +84,5 @@ else {
     //Ajoute le controleur de Produit
     require('controller/controllerAccueil.php');
     //Appel la fonction listProduits contenu dans le controleur de Produit
-
     listProduits();
 }

@@ -10,10 +10,11 @@ function listCategories()
     require('view/categorieView.php');
 }
 
-function getCategories()
+/*function produit($idProduit)
 {
-    $categorieManager = new CategorieManager();
-    $categories = $categorieManager->getCategories();
-    return $categories;
-}
+    $produitManager = new ProduitManager();
+    $produit = $produitManager->getProduit($idProduit);    
+
+    require('view/produitView.php');
+}*/
 ?>
