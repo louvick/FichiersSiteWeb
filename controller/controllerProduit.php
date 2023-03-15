@@ -2,12 +2,19 @@
 
 require('model/ProduitManager.php');
 
-function listProduits()
+function listProduits( $estApi=false)
 {
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduits();
 
-    require('view/produitsView.php');
+
+    if($estApi) {
+        return json_encode($produits, JSON_PRETTY_PRINT);
+    }
+    else{
+        require('view/produitView.php');
+    }
+
 }
 
 function listProduitsCategorie($idCategorie)
@@ -31,24 +38,6 @@ function produit($idProduit, $estApi=false)
     else{
         require('view/produitView.php');
     }
-    
-       
-
-    
-}
-
-function insertProduit($produit,$categorie,$description)
-{
-    $produitManager = new ProduitManager();
-    return $produitManager->addProduit($produit,$categorie,$description);
-}
-
-function removeProduit($idProduit)
-{
-    $produitManager = new ProduitManager();
-    $produitManager->removeProduit($idProduit);    
-
-    require('view/produitView.php');
 }
 
 function insertProduit($produit,$categorie,$description)

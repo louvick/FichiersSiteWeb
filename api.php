@@ -7,15 +7,23 @@
             case 'produit':
                 switch ($_SERVER["REQUEST_METHOD"]) {
                     case 'GET':
-                        echo "GET";
                         require('controller/controllerProduit.php');
-                        if($_REQUEST['id']==null) {
-                            listeProduits();
+                        
+                        if(!isset($_REQUEST['id'])) {
+                            http_response_code(200);
+                            echo listProduits(true);
                         }
-                        else if($_REQUEST['id']!="") {
+                        else if(isset($_REQUEST['id'])&&$_REQUEST['id']!="") {
+                            $reponse = produit($_REQUEST['id'],true);
                             
-                            //Appel la fonction produit contenu dans le controleur de Produit
-                            echo produit($_REQUEST['id'],true);
+                            if($_REQUEST['id']>0&&$reponse!= null) {
+                                echo $reponse;
+                            }
+                            else {
+                                http_response_code(400);
+                                echo '{"ÉCHEC" : "Aucun produit ne correspond à votre requête."}';
+                            }
+                            
                         }
                         else {
                             echo "Il n'y a pas d'id";
