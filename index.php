@@ -85,6 +85,7 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerProduit.php');
         //insertProduit($_REQUEST['produit'],$_REQUEST['categorie'],$_REQUEST['description']);
     }
+}
 elseif (isset($_REQUEST['credential'])) {
     require('controller/controllerUtilisateur.php');
     authentificationGoogle($_REQUEST['credential']);

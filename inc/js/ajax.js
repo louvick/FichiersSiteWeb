@@ -42,7 +42,13 @@ function testajax(bodyRequest)  {
         if (this.readyState === 4) {
             // Si la requête a fonctionné (code de succès "200 OK")
             if (this.status === 200) {
+                
+
                 alert("La requête AJAX a marché");
+                document.querySelectorAll('#addProduitForm input[name="produit"]')[0].value ="";
+                document.querySelectorAll('#addProduitForm select')[0].value=1;
+                document.querySelectorAll('#addProduitForm input[name="description"]')[0].value="";
+                document.querySelectorAll('#addProduitForm')[0].classList.add("hidden");
                 let tableau = new URLSearchParams(bodyRequest);
 
                 if(tableau.get('action')=='createProduit') {
