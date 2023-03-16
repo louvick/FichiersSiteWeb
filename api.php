@@ -32,9 +32,10 @@
                         break;
                     case 'POST':
                         require('controller/controllerCategorie.php');
+                        require('controller/controllerProduit.php');
                         $infosNouveauProduit = json_decode(file_get_contents('php://input'), true);
                         
-                        if(isset($infosNouveauProduit['produit'])&&isset($infosNouveauProduit['id_categorie'])&&isset($infosNouveauProduit['description'])&&getCategorieId($infosNouveauProduit['id_categorie'])) {
+                        if(isset($infosNouveauProduit['produit'])&&isset($infosNouveauProduit['id_categorie'])&&isset($infosNouveauProduit['description'])&&getCategorieId($infosNouveauProduit['id_categorie'])!=null) {
                             if(insertProduit($infosNouveauProduit['produit'],$infosNouveauProduit['id_categorie'],$infosNouveauProduit['description'])) {
                                 http_response_code(200);
                                 echo '{"SUCCÈS" : "L\'ajout du produit a fonctionné."}';
@@ -44,13 +45,17 @@
                                 echo '{"ÉCHEC" : "L\'ajout du produit n\'a pas fonctionné."}';
                             }
                         }
-                        else if(!isset($infosNouveauProduit['id_categorie'])||$infosNouveauProduit['id_categorie']<0) {
+                        else if(isset($infosNouveauProduit['id_categorie'])&&$infosNouveauProduit['id_categorie']<0) {
                             http_response_code(400);
-                            echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'ID de la catégorie n’est pas un chiffre."}';
+                            echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'ID de la catégorie n’est pas un chiffre positif."}';
                         }
                         else if(isset($infosNouveauProduit['id_categorie'])&&!getCategorieId($infosNouveauProduit['id_categorie'])) {
                             http_response_code(400);
                             echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'ID de la catégorie n’existe pas en BD."}';
+                        }
+                        else {
+                            http_response_code(400);
+                            echo '{"ÉCHEC" : "Il manque des paramètres."}';
                         }
 
                         break;
@@ -58,7 +63,22 @@
                         echo "PUT";
                         break;
                     case 'DELETE':
-                        echo "DELETE";
+                        require('controller/controllerProduit.php');
+                        if(isset($_REQUEST["id"])&&$_REQUEST["id"]>0) {
+                            if(removeProduit($_REQUEST["id"],true)>0) {
+                                echo '{"SUCCÈS " : "La suppression du produit a fonctionné."}';
+                                http_response_code(200);
+                            }
+                            else {
+                                http_response_code(400);
+                                echo '{"ÉCHEC " : "La suppression du produit a échoué. L\'ID du produit n\'existe pas."}';
+                            }
+                        }
+                        else {
+                            http_response_code(400);
+                            echo '{"ÉCHEC " : "La suppression du produit a échoué. L\'ID du produit est erronné."}';
+                            
+                        }
                         break;
                     default:
                         http_response_code(400);

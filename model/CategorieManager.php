@@ -25,11 +25,19 @@ class CategorieManager extends Manager
     public function getCategorieId($id)
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM tbl_categorie WHERE id_categorie = ?');
+        $req = $db->prepare('SELECT * FROM tbl_categorie WHERE id_categorie = ?');
 
         $req->execute(array($id));
-        $cat= new Categorie($req->fetch());
+        
+        
+        $cat = $req->fetch();
+        $req->closeCursor();
 
-        return $cat;
+        if($cat) {
+            $asd = new Categorie($cat);
+            return $asd;
+        }
+
+        return null;
     }
 }

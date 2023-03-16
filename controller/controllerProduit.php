@@ -46,10 +46,15 @@ function insertProduit($produit,$categorie,$description)
     return $produitManager->addProduit($produit,$categorie,$description);
 }
 
-function removeProduit($idProduit)
+function removeProduit($idProduit,$estApi)
 {
     $produitManager = new ProduitManager();
-    $produitManager->removeProduit($idProduit);    
+    $asd = $produitManager->removeProduit($idProduit);
 
-    require('view/produitView.php');
+    if($estApi==false) {
+        require('view/produitView.php');
+    }
+    else {
+        return $asd;
+    }
 }

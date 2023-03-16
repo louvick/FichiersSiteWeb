@@ -60,6 +60,7 @@ class ProduitManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE FROM tbl_produit WHERE `tbl_produit`.`id_produit` = ?');
         $req->execute(array($id));
+        return $req->rowCount();
     }
 
 }
