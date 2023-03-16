@@ -16,4 +16,11 @@ function getCategories()
     $categories = $categorieManager->getCategories();
     return $categories;
 }
+
+function getCategorieId($id)
+{
+    $categorieManager = new CategorieManager();
+    $categories = $categorieManager->getCategorieId($id);
+    return $categories;
+}
 ?>

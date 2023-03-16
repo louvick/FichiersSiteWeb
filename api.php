@@ -31,7 +31,28 @@
                         
                         break;
                     case 'POST':
-                        echo "POST";
+                        require('controller/controllerCategorie.php');
+                        $infosNouveauProduit = json_decode(file_get_contents('php://input'), true);
+                        
+                        if(isset($infosNouveauProduit['produit'])&&isset($infosNouveauProduit['id_categorie'])&&isset($infosNouveauProduit['description'])&&getCategorieId($infosNouveauProduit['id_categorie'])) {
+                            if(insertProduit($infosNouveauProduit['produit'],$infosNouveauProduit['id_categorie'],$infosNouveauProduit['description'])) {
+                                http_response_code(200);
+                                echo '{"SUCCÈS" : "L\'ajout du produit a fonctionné."}';
+                            }
+                            else {
+                                http_response_code(400);
+                                echo '{"ÉCHEC" : "L\'ajout du produit n\'a pas fonctionné."}';
+                            }
+                        }
+                        else if(!isset($infosNouveauProduit['id_categorie'])||$infosNouveauProduit['id_categorie']<0) {
+                            http_response_code(400);
+                            echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'ID de la catégorie n’est pas un chiffre."}';
+                        }
+                        else if(isset($infosNouveauProduit['id_categorie'])&&!getCategorieId($infosNouveauProduit['id_categorie'])) {
+                            http_response_code(400);
+                            echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'ID de la catégorie n’existe pas en BD."}';
+                        }
+
                         break;
                     case 'PUT':
                         echo "PUT";

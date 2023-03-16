@@ -21,4 +21,15 @@ class CategorieManager extends Manager
         $req->closeCursor();
         return $categories;
     }
+
+    public function getCategorieId($id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT * FROM tbl_categorie WHERE id_categorie = ?');
+
+        $req->execute(array($id));
+        $cat= new Categorie($req->fetch());
+
+        return $cat;
+    }
 }
