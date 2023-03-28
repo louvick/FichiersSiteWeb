@@ -7,10 +7,10 @@ require_once("model/Categorie.php");
 
 class CategorieManager extends Manager
 {
-    public function getCategories()
+    public function getCategories($langue)
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM tbl_categorie ORDER BY id_categorie');
+        $req = $db->query(str_replace(':lang', $langue, 'SELECT id_categorie,categorie_:lang AS categorie, description_:lang AS description FROM tbl_categorie'));
 
         $categories = array();
 
@@ -22,10 +22,10 @@ class CategorieManager extends Manager
         return $categories;
     }
 
-    public function getCategorieId($id)
+    public function getCategorieId($langue,$id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM tbl_categorie WHERE id_categorie = ?');
+        $req = $db->prepare(str_replace(':lang', $langue,'SELECT id_categorie,categorie_:lang AS categorie, description_:lang AS description FROM tbl_categorie WHERE id_categorie=?'));
 
         $req->execute(array($id));
         

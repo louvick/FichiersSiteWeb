@@ -1,13 +1,13 @@
 <?php $title = 'Categories'?>
 
 <?php ob_start(); ?>
-<h1>Les Catégories</h1>
+<h1><?= _('Les Catégories')?></h1>
 
 <?php foreach($categories as $categorie) { ?>
     <div>
-        <h3>Categories: <?= htmlspecialchars($categorie->get_Categorie()) ?> </h3>        
-        <p>Description: <?= htmlspecialchars($categorie->get_description()) ?> </p>
-        <a href=<?="produitscategorie/".$categorie->get_id_categorie()?>>Voir <?=$categorie->get_Categorie()?></a>        
+        <h3><?= _('Catégories').": ".htmlspecialchars($categorie->get_Categorie()) ?> </h3>        
+        <p><?= _('Description').": ".htmlspecialchars($categorie->get_description()) ?> </p>
+        <a href=<?="index.php?action=produitscategorie&id=".$categorie->get_id_categorie()?>><?= _('Voir')?> <?=$categorie->get_Categorie()?></a>        
         <hr>
     </div>
 <?php } ?>

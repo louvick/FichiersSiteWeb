@@ -2,35 +2,35 @@
 
 require('model/ProduitManager.php');
 
-function listProduits( $estApi=false)
+function listProduits($langue,$estApi=false)
 {
     $produitManager = new ProduitManager();
-    $produits = $produitManager->getProduits();
+    $produits = $produitManager->getProduits($langue);
 
 
     if($estApi) {
         return json_encode($produits, JSON_PRETTY_PRINT);
     }
     else{
-        require('view/produitView.php');
+        require('view/produitsView.php');
     }
 
 }
 
-function listProduitsCategorie($idCategorie)
+function listProduitsCategorie($langue,$idCategorie)
 {
     $produitManager = new ProduitManager();
-    $categorie = $produitManager->getProduitsCategorie($idCategorie)[0]->get_categorie();
+    $categorie = $produitManager->getProduitsCategorie($langue,$idCategorie)[0]->get_categorie();
     
-    $produits = $produitManager->getProduitsCategorie($idCategorie);
+    $produits = $produitManager->getProduitsCategorie($langue,$idCategorie);
 
     require('view/produitsView.php');
 }
 
-function produit($idProduit, $estApi=false)
+function produit($langue,$idProduit, $estApi=false)
 {
     $produitManager = new ProduitManager();
-    $produit = $produitManager->getProduit($idProduit); 
+    $produit = $produitManager->getProduit($langue,$idProduit); 
     
     if($estApi) {
         return json_encode($produit, JSON_PRETTY_PRINT);
@@ -40,10 +40,10 @@ function produit($idProduit, $estApi=false)
     }
 }
 
-function insertProduit($produit,$categorie,$description)
+function insertProduit($langue,$produit,$categorie,$description)
 {
     $produitManager = new ProduitManager();
-    return $produitManager->addProduit($produit,$categorie,$description);
+    return $produitManager->addProduit($langue,$produit,$categorie,$description);
 }
 
 function removeProduit($idProduit,$estApi)
