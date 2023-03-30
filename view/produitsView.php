@@ -11,8 +11,8 @@ else {
     $title = _('Produits');
 }
 require('controller/controllerCategorie.php');
-
-$categories = getCategories(substr($_SESSION['langue'], 0, 2));
+print_r($langueBd);
+$categories = getCategories($langueBd);
 ?>
 
 <?php ob_start(); ?>
