@@ -6,7 +6,7 @@
 require('model/ProduitManager.php');
 
 //Fonction qui affichera tous les produits
-function listProduits($langue)
+function listProduits()
 {
     //Nouvel objet de type ProduitManager 
     $produitManager = new ProduitManager();
@@ -14,7 +14,7 @@ function listProduits($langue)
     
     //Crée une variable $produits qui sera utilisée dans la vue.
     //Cette variable contiendra un array d'objet de type Produit. 
-    $produits = $produitManager->getProduits($langue);
+    $produits = $produitManager->getProduits();
 
     //Appel la vue d'accueil
     require('view/accueilView.php');

@@ -10,9 +10,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # index.php?action=$1  --> $1 sera remplacer par le contenu des ( )
 # Ex: http://localhost/produits sera remplacé par http://localhost/index.php?action=produits
 
-RewriteRule ^(\w*)$ index.php?action=$1 [QSA]
+RewriteRule ^([a-z]*)$ index.php?action=$1 [QSA]
 
 
 # Ex: http://localhost/produit/1 sera remplacé par http://localhost/index.php?action=produit&id=1
 
-RewriteRule ^(\w*)/([0-9]*)$ index.php?action=$1&id=$2 [QSA]
+RewriteRule ^([a-z]*)/([0-9]*)$ index.php?action=$1&id=$2 [QSA]

@@ -2,25 +2,25 @@
 
 require('model/CategorieManager.php');
 
-function listCategories($langue)
+function listCategories()
 {
     $categorieManager = new CategorieManager();
-    $categories = $categorieManager->getCategories($langue);
+    $categories = $categorieManager->getCategories();
 
     require('view/categorieView.php');
 }
 
-function getCategories($langue)
+function getCategories()
 {
     $categorieManager = new CategorieManager();
-    $categories = $categorieManager->getCategories($langue);
+    $categories = $categorieManager->getCategories();
     return $categories;
 }
 
-function getCategorieId($langue,$id)
+function getCategorieId($id)
 {
     $categorieManager = new CategorieManager();
-    $categories = $categorieManager->getCategorieId($langue,$id);
+    $categories = $categorieManager->getCategorieId($id);
     return $categories;
 }
 ?>

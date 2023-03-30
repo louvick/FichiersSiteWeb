@@ -5,18 +5,18 @@
 
 <form action="index.php" method="post" class="Se connecter">
     <fieldset>
-        <h2><?= _('Se connecter')?></h2>
-        <label for="courriel"><?= _('Courriel')?></label>
+        <h2>Se connecter</h2>
+        <label for="courriel">Courriel</label>
         <input type="text" name="courriel" id="courriel">
         <br>
-        <label for="mdp"><?= _('Mot de passe')?></label>
+        <label for="mdp">Mot de passe</label>
         <input type="text" name="mdp" id="mdp">
         <br>
-        <label for="souvenir"><?= _('Se souvenir de moi')?></label>
+        <label for="souvenir">Se souvenir de moi</label>
         <input type="checkbox" name="souvenir" id="souvenir">
         <br>
         <input type="hidden" name="action" value="authentifier">
-        <button type="submit"><?= _('Se connecter')?></button>
+        <button type="submit">Se connecter</button>
     </fieldset>
 
     <div id="g_id_onload"
