@@ -11,3 +11,8 @@ nav li {
 .hidden {
     display: none;
 }
+
+.paypalform fieldset {
+    display: grid;
+    grid-template-columns: 35% 10% 22.5% 22.5%
+}
