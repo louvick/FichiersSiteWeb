@@ -11,3 +11,15 @@ nav li {
 .hidden {
     display: none;
 }
+
+#paypal-button-container .grid-container {
+    display: grid;
+    grid-template-columns: 35% 20% 25% 25%;
+    grid-gap: 10px; /* Optional gap between columns */
+}
+
+#paypal-button-container .grid-item {
+    background-color: #ddd;
+    padding: 20px;
+    text-align: center;
+}
