@@ -38,9 +38,7 @@ function testajax(bodyRequest)  {
     // Fonction automatiquement appelée quand l'état de la requête change
 
     xhttp.onreadystatechange = function() {
-        // Si l'état est 4 (terminé)
         if (this.readyState === 4) {
-            // Si la requête a fonctionné (code de succès "200 OK")
             if (this.status === 200) {
                 
 

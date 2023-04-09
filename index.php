@@ -85,6 +85,14 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerProduit.php');
         //insertProduit($_REQUEST['produit'],$_REQUEST['categorie'],$_REQUEST['description']);
     }
+    else if($_REQUEST['action']=='achatProduit'&&isset($_SESSION['courriel'])){
+        require('controller/controllerProduit.php');
+        listProduitsPaypal();
+    }
+    else {
+        require('controller/controllerAccueil.php');
+        listProduits();
+    }
 }
 elseif (isset($_REQUEST['credential'])) {
     require('controller/controllerUtilisateur.php');

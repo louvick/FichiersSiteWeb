@@ -8,6 +8,7 @@ class Produit implements JsonSerializable {
     private $_categorie; // N'est pas dans la table produit, mais les requêtes vont aussi chercher le nom de la catégorie en faisant une jointure.
     private $_produit;
     private $_description;
+    private $_prix;
 
     public function __construct($params = array()){
   
@@ -26,7 +27,8 @@ class Produit implements JsonSerializable {
                       'id_categorie' => $this->_id_categorie,
                       'categorie'    => $this->_categorie,
                       'produit'      => $this->_produit,
-                      'description'  => $this->_description
+                      'description'  => $this->_description,
+                      'prix'  => $this->_prix
                     );
     }
     
@@ -129,5 +131,15 @@ class Produit implements JsonSerializable {
         $this->_categorie = $_categorie;
 
         return $this;
+    }
+
+    public function set_prix($prix) {
+        $this->_prix = $prix;
+
+        return $this;
+    }
+
+    public function get_prix() {
+        return $this->_prix;
     }
 }

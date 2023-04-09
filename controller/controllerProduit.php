@@ -17,6 +17,13 @@ function listProduits( $estApi=false)
 
 }
 
+function listProduitsPaypal()
+{
+    $produitManager = new ProduitManager();
+    $produits = $produitManager->getProduits();
+    require('view/achatView.php');
+}
+
 function listProduitsCategorie($idCategorie)
 {
     $produitManager = new ProduitManager();

@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 nav ul {
     display:flex;
     margin:20px 0; 
@@ -12,14 +16,22 @@ nav li {
     display: none;
 }
 
-#paypal-button-container .grid-container {
+.grid-container {
     display: grid;
-    grid-template-columns: 35% 20% 25% 25%;
-    grid-gap: 10px; /* Optional gap between columns */
+    grid-template-columns: 3fr 1fr 2fr 2fr;
+    grid-gap: 20px;
 }
 
-#paypal-button-container .grid-item {
-    background-color: #ddd;
-    padding: 20px;
-    text-align: center;
+input[readonly] {
+    color:gray;
+    background-color: #f2f2f2;
+    border-color:#f2f2f2;
+}
+
+.grid-container bold {
+    grid-column: span 1;
+}
+
+.grid-container #produitltot {
+    grid-column: span 3;
 }

@@ -1,6 +1,7 @@
 <?php $baseURL = "/FichiersSiteWeb/";
 require_once('model/AutologManager.php')?>
 <script src="inc/js/ajax.js" defer></script>
+<script src="inc/js/calcul.js" defer></script>
 <!DOCTYPE html>
 <html>
     <head>
@@ -51,6 +52,7 @@ require_once('model/AutologManager.php')?>
                 
                 
                 if(isset($_SESSION['courriel']) && $_SESSION['courriel']!=null||isset($_COOKIE['g_csrf_token'])) { 
+                    echo '<li><a href="'.$baseURL.'index.php?action=achatProduit">Achat</a></li>';
                     echo "<li><a href=".$baseURL."deconnexion>Se déconnecter</a></li>";
                 
                 }
