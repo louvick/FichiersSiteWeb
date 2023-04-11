@@ -1,14 +1,17 @@
 <?php $baseURL = "/FichiersSiteWeb/";
 require_once('model/AutologManager.php')?>
-<script src="inc/js/ajax.js" defer></script>
-<script src="inc/js/calcul.js" defer></script>
+
+
 <!DOCTYPE html>
 <html>
     <head>
+        
         <meta meta name="referrer" content="no-referrer-when-downgrade" charset="utf-8"/>
         <title><?= $title ?></title>
         <link href="<?= $baseURL;?>inc/css/style.css" rel="stylesheet" /> 
         <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="inc/js/ajax.js" defer></script>
+        <script src="inc/js/calcul.js" defer></script>
     </head>
     
 

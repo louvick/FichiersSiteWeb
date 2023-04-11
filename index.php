@@ -2,11 +2,10 @@
 if(!isset($_SESSION)){
     session_start();
 }
-/*if(!isset($_SESSION['courriel'])) {
-    require('controller/controllerUtilisateur.php');
-    print_r("asdadsa");
-    getFormConnexion();
-}*/
+
+//header("Content-Type: application/json");
+$paypalInfos = json_decode(file_get_contents('php://input'), true);
+
 //Est-ce qu'un paramètre action est présent
 if (isset($_REQUEST['action'])) {
     
@@ -89,6 +88,31 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerProduit.php');
         listProduitsPaypal();
     }
+    else if($_REQUEST['action'] === 'paypal') {
+         // Si l’utilisateur vient de cliquer sur le bouton Paypal, les informations de la requête AJAX seront traitées dans ce « else if ».
+        require('./controller/controllerPaypal.php');
+
+        // Générez une transaction Paypal à l’aide des informations reçues dans la variable $paypalINfos, de l’utilisateur connecté et
+        // de la fonction « registerOrder() » du contrôleur controllerPaypal.php, puis remplissez les champs pertinents des tables
+        // tbl_commande et tbl_commande_produit de la BD en passant, ici encore, par le contrôleur controllerPaypal.php. N’oubliez
+        // pas de retourner la transaction PayPal générée en réponse à la requête AJAX (code de succès 200) ou de retourner une erreur
+         // (code d’échec 400) si le processus connaît un raté.  
+    }
+    else if(isset($paypalInfos['event_type'])) {
+        require('./controller/controllerPaypal.php');
+    
+        if($paypalInfos['event_type'] === 'CHECKOUT.ORDER.APPROVED') {
+            // Enregistrez dans la BD les informations « id », « payer_id » et « email_address » de l’événement « checkout order approved »
+            // et ce, en passant par une fonction du contrôleur controllerPaypal.php. N’oubliez pas de retourner un code de succès (200) ou
+            // un code d’échec (400) aux serveurs PayPal si l’insertion réussit ou non en BD.
+        }     
+        else if($paypalInfos['event_type'] === 'PAYMENT.CAPTURE.COMPLETED') {
+            // Faites passer à 1 le statut de la commande dans la BD dont l’identifiant correspond au champ
+            // « order_id » de l’événement « payment capture completed » et ce, en passant par une fonction
+            // du contrôleur controllerPaypal.php. N’oubliez pas d’envoyer un code de succès (200) ou un code
+            // d’échec (400) aux serveurs PayPal si la modification réussit ou non en BD.
+        }
+    }            
     else {
         require('controller/controllerAccueil.php');
         listProduits();

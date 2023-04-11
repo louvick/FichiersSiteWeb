@@ -15,12 +15,29 @@ function changeValue(e) {
     for (let i = 0; i < input.length; i++) {
         total.value= Number(total.value) + Number(input[i].nextElementSibling.nextElementSibling.value);
     }
-
 }
 
 function orderToJson() {
     // À compléter plus loin dans le laboratoire. Cette fonction doit retourner au format JSON les ID et
     // les quantités des produits figurant dans la commande de l’utilisateur.
+    let input = document.querySelectorAll(".grid-container input[name='produit']");
+    let produits = '{"produits":[';
+    let count=0;
+
+    for(let i=0;i<input.length;i++) {
+        if(input[i].value!=0&&count!=0) {
+            count++;
+            produits+=',{"id":'+input[i].id.toString().replace('produit',"")+',"quantité":'+input[i].value+'}';
+        }
+        else if(input[i].value!=0) {
+            produits+='{"id":'+input[i].id.toString().replace('produit',"")+',"quantité":'+input[i].value+'}';
+            count++;
+        }
+    }
+
+    produits+=']}';
+
+    return JSON.parse(produits);
 }
 
 function paypalAjax(sendUrl, sendBody) {
@@ -49,3 +66,4 @@ paypal.Buttons({
             });
         }
     }).render("#paypal-button-container");
+
